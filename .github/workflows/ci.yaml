@@ -56,3 +56,13 @@ jobs:
         git commit -m "Publish new version. ${{ steps.tag_version.outputs.new_tag }}"
         git push origin main
 
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_CHANNEL: nickvab_git
+        SLACK_COLOR: ${{ job.status }} 
+        SLACK_MESSAGE: 'A new image ${{ github.repository }}:${{ github.ref_name }} has been released'
+        SLACK_TITLE: Status
+        SLACK_USERNAME: ${{ github.repository }}
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }} 
+
